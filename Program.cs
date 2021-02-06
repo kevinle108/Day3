@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Day3
 {
@@ -6,75 +8,50 @@ namespace Day3
     {
         static void Main(string[] args)
         {
+            int NUM_OF_SIDES = 4;
+            double[] xValues = new double[NUM_OF_SIDES+1];
+            double[] yValues = new double[NUM_OF_SIDES+1];
+            // NOTE: the first index (index 0) of each array is left alone to make things simpler
+            // index will correspond with the vertex number
+            // ie. xValue[3] will contain the x-coordinate for the third vertex
 
-            printMultTable();
-            printMultTableWhileLoop();
-            printMultTableForWhileLoop();
-            printMultTableWhileForLoop();
-
-
-
-
-
-            void printMultTable()
+            int vertex = 1;
+            while (vertex <= NUM_OF_SIDES) {
+                Console.Write($"vertex{vertex} x-value: ");
+                xValues[vertex] = Convert.ToDouble(Console.ReadLine());
+                Console.Write($"vertex{vertex} y-value: ");
+                yValues[vertex] = Convert.ToDouble(Console.ReadLine());
+                vertex++;
+            }
+            int side = 1;           
+            double xA, xB, yA, yB;
+            double area;
+            List<double> areas = new List<double>();
+            while (side <= NUM_OF_SIDES)
             {
-                Console.WriteLine("Multiplication Table using For Loop");
-                for (int i = 1; i <= 12; i++)
+                if (side == NUM_OF_SIDES) // last side will use the last and first points
                 {
-                    for (int j = 1; j <= 12; j++)
-                    {
-                        Console.WriteLine($"{i} x {j} = {i*j}");
-                    }
-                    Console.WriteLine();
+                    xA = xValues[side]; // last x
+                    yA = yValues[side]; // last y
+                    xB = xValues[1]; // first x
+                    yB = yValues[1]; // first y
                 }
-            }
-
-            void printMultTableWhileLoop()
-            {
-                Console.WriteLine("Multiplication Table using While Loop");
-                int i = 1;
-                while (i <= 12)
+                else
                 {
-                    int j = 1;
-                    while (j <= 12)
-                    {
-                        Console.WriteLine($"{i} x {j} = {i * j}");
-                        j++;
-                    }
-                    Console.WriteLine();
-                    i++;
-                }                
-            }
+                    xA = xValues[side];
+                    yA = yValues[side];
+                    xB = xValues[side+1];
+                    yB = yValues[side+1];
 
-            void printMultTableForWhileLoop()
-            {
-                Console.WriteLine("Multiplication Table using For and While Loop");
-                for (int i = 1; i <= 12; i++)
-                {
-                    int j = 1;
-                    while (j <= 12)
-                    {
-                        Console.WriteLine($"{i} x {j} = {i * j}");
-                        j++;
-                    }
-                    Console.WriteLine();
                 }
+                area = (xA - xB) * (yA + yB) / 2;
+                Console.WriteLine($"Points ({xA},{yA}) and ({xB},{yB}) -> area = {area}");
+                areas.Add(area);
+                side++;
             }
-
-            void printMultTableWhileForLoop()
-            {
-                Console.WriteLine("Multiplication Table using While and For Loop");
-                int i = 1;
-                while (i <= 12)
-                {
-                    for (int j = 1; j <= 12; j++)
-                    {
-                        Console.WriteLine($"{i} x {j} = {i * j}");
-                    }
-                    Console.WriteLine();
-                    i++;
-                }
-            }
+            double finalArea = Math.Abs(areas.Sum());
+            Console.WriteLine($"The final area is {finalArea}");
+            Console.WriteLine("Done");
         }
     }
 }
