@@ -8,7 +8,14 @@ namespace Day3
     {
         static void Main(string[] args)
         {
-            int NUM_OF_SIDES = 4;
+            int NUM_OF_SIDES;
+            do
+            {
+                Console.Write("How many vertices for your polygon? ");
+                NUM_OF_SIDES = int.Parse(Console.ReadLine());
+            } while (NUM_OF_SIDES < 3);
+            
+
             double[] xValues = new double[NUM_OF_SIDES+1];
             double[] yValues = new double[NUM_OF_SIDES+1];
             // NOTE: the first index (index 0) of each array is left alone to make things simpler
